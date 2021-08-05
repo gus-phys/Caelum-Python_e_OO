@@ -1,3 +1,4 @@
 # Temporary directories/files
 .ipynb_checkpoints
 __pycache__
+contas.txt
