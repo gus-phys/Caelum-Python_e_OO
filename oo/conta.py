@@ -26,12 +26,27 @@ class Cliente:
         self.cpf = cpf
 
 class Conta:
+
+    __slots__ = ['_numero', '_titular', '_saldo', '_limite', 'historico']
+    
+
     def __init__(self, numero, cliente, saldo, limite=1000.0):
-        self.numero = numero
-        self.titular = cliente
-        self.saldo = saldo
-        self.limite = limite
+        self._numero = numero
+        self._titular = cliente
+        self._saldo = saldo
+        self._limite = limite
         self.historico = Historico()
+
+    @property
+    def saldo(self):
+        return self._saldo
+
+    @saldo.setter
+    def saldo(self, saldo):
+        if (saldo < 0):
+            print("saldo não pode ser negativo")
+        else:
+            self._saldo = saldo
 
     def deposita(self, valor):
         self.saldo += valor
