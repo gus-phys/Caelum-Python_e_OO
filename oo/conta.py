@@ -27,8 +27,9 @@ class Cliente:
 
 class Conta:
 
-    __slots__ = ['_numero', '_titular', '_saldo', '_limite', 'historico']
-    
+    # __slots__ = ['_numero', '_titular', '_saldo', '_limite', 'historico']
+
+    identificador = 1
 
     def __init__(self, numero, cliente, saldo, limite=1000.0):
         self._numero = numero
@@ -36,6 +37,9 @@ class Conta:
         self._saldo = saldo
         self._limite = limite
         self.historico = Historico()
+
+        self.identificador = Conta.identificador
+        Conta.identificador += 1
 
     @property
     def saldo(self):
