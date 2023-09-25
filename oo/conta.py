@@ -54,15 +54,25 @@ class Conta:
 
     def deposita(self, valor):
         self.saldo += valor
-        self.historico.transacoes.append("deposito de {}".format(valor))
+        self.historico.transacoes.append(
+            "{} - deposito de {}".format(
+                datetime.datetime.today(),
+                valor,
+                )
+            )
 
     def saca(self, valor):
         if (self.saldo < valor):
             return False
         else:
             self.saldo -= valor
-            self.historico.transacoes.append("saque de {}".format(valor))
-            # return True
+            self.historico.transacoes.append(
+                "{} - saque de {}".format(
+                    datetime.datetime.today(),
+                    valor
+                    )
+                )
+            return True
 
     def transfere_para(self, destino, valor):
         retirou = self.saca(valor)
@@ -70,15 +80,24 @@ class Conta:
             return False
         else:
             destino.deposita(valor)
-            self.historico.transacoes.append("transferência de {} para conta"
-            " {}".format(valor, destino.numero))
+            self.historico.transacoes.append(
+                "{} - transferência de {} para conta {}".format(
+                    datetime.datetime.today(),
+                    valor, 
+                    destino._numero
+                    )
+                )
             return True
 
     def extrato(self):
         print(
         "nome: {} {} \ncpf: {} \nnumero: {} \nsaldo: {}"
-        .format(self.titular.nome, self.titular.sobrenome, self.titular.cpf,
-        self.numero, self.saldo)
+        .format(self._titular.nome, self._titular.sobrenome, self._titular.cpf,
+        self._numero, self._saldo)
         )
-        self.historico.transacoes.append("tirou extrato - saldo de {}"
-        .format(self.saldo))
+        self.historico.transacoes.append(
+            "{} - tirou extrato - saldo de {}".format(
+                datetime.datetime.today(),
+                self.saldo
+                )
+            )
