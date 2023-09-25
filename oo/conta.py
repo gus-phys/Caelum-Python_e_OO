@@ -26,9 +26,15 @@ class Cliente:
         self.cpf = cpf
 
 class Conta:
-
-    # __slots__ = ['_numero', '_titular', '_saldo', '_limite', 'historico']
-
+    
+    # __slots__ = [
+    #     '_numero', 
+    #     '_titular', 
+    #     '_saldo', 
+    #     '_limite', 
+    #     'historico'
+    #     ]
+    
     identificador = 1
 
     def __init__(self, numero, cliente, saldo, limite=1000.0):
