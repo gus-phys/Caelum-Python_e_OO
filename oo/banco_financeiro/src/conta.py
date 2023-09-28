@@ -46,6 +46,14 @@ class Conta:
 
         self.identificador = Conta.identificador
         Conta.identificador += 1
+        
+    def __str__(self):
+        return "Dados da Conta: \nNumero: {} \nTitular: {} \nSaldo: {} \nLimite: {}".format(
+            self._numero,
+            self._titular,
+            self._saldo,
+            self._limite
+        )
 
     @property
     def saldo(self):
@@ -94,6 +102,10 @@ class Conta:
                     )
                 )
             return True
+        
+    def atualiza(self, taxa):
+        self._saldo += self._saldo*taxa
+        return self._saldo
 
     def extrato(self):
         print(
@@ -107,3 +119,29 @@ class Conta:
                 self.saldo
                 )
             )
+
+class ContaCorrente(Conta):
+    
+    def atualiza(self, taxa):
+        self._saldo += self._saldo*taxa*2
+        return self._saldo
+        
+    def deposita(self, valor):
+        self._saldo += valor - 0.1
+
+class ContaPoupanca(Conta):
+    
+    def atualiza(self, taxa):
+        self._saldo += self._saldo*taxa*3
+        return self._saldo
+        
+class AtualizadorDeContas:
+    
+    def __init__(self, selic, saldo_total=0):
+        self._selic = selic
+        self._saldo_total = saldo_total
+        
+    def roda(self, conta):
+        print("Saldo da Conta: {}".format(conta._saldo))
+        self._saldo_total += conta.atualiza(self._selic)
+        print("Saldo Final: {}".format(self._saldo_total))
