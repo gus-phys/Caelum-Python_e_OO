@@ -16,7 +16,7 @@ class Gerente(Funcionario):
         self._qtd_funcionarios = qtd_funcionarios
 
     def get_bonificacao(self):
-        return self._salario * 0.15
+        return super().get_bonificacao() + 1000
 
     def autentica(self, senha):
         if self._senha == senha:
@@ -25,3 +25,25 @@ class Gerente(Funcionario):
         else:
             print("acesso negado")
             return False
+
+class Cliente():
+
+    def __init__(self, nome, cpf, senha):
+        self._nome = nome
+        self._cpf = cpf
+        self._senha = senha
+
+class ControleDeBonificacoes:
+
+    def __init__(self, total_bonificacoes=0):
+        self._total_bonificacoes = total_bonificacoes
+
+    def registra(self, obj):
+        if(hasattr(obj, 'get_bonificacao')):
+            self._total_bonificacoes += obj.get_bonificacao()
+        else:
+            print('instância de {} não implementa o método get_bonificacao()'.format(obj.__class__.__name__))
+
+    @property
+    def total_bonificacoes(self):
+        return self._total_bonificacoes
