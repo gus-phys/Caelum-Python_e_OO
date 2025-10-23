@@ -1,4 +1,22 @@
+import abc
 import datetime
+
+class Banco:
+    def __init__(self, nome):
+        self.nome = nome
+        self.contas = []
+
+    def adiciona(self, conta):
+        self.contas.append(conta)
+
+    def pagaConta(self, posicao):
+        return self.contas[posicao]
+    
+    def pagaTotalDeContas(self):
+        total = 0
+        for conta in self.contas:
+            total += 1
+        return total
 
 class Historico:
     def __init__(self):
@@ -25,7 +43,7 @@ class Cliente:
         self.sobrenome = sobrenome
         self.cpf = cpf
 
-class Conta:
+class Conta(abc.ABC):
     
     # __slots__ = [
     #     '_numero', 
@@ -48,7 +66,9 @@ class Conta:
         Conta.identificador += 1
         
     def __str__(self):
-        return "Dados da Conta: \nNumero: {} \nTitular: {} \nSaldo: {} \nLimite: {}".format(
+        tipo = getattr(self, 'tipo', self.__class__.__name__)
+        return "Dados da Conta: \nTipo: {} \nNumero: {} \nTitular: {} \nSaldo: {} \nLimite: {}".format(
+            tipo,
             self._numero,
             self._titular,
             self._saldo,
@@ -103,6 +123,7 @@ class Conta:
                 )
             return True
         
+    @abc.abstractmethod
     def atualiza(self, taxa):
         self._saldo += self._saldo*taxa
         return self._saldo
@@ -121,19 +142,28 @@ class Conta:
             )
 
 class ContaCorrente(Conta):
-    
+    tipo = "Conta Corrente"
+    taxa_multiplicador = 2
+
     def atualiza(self, taxa):
-        self._saldo += self._saldo*taxa*2
-        return self._saldo
+        return super().atualiza(taxa*self.taxa_multiplicador)
         
     def deposita(self, valor):
         self._saldo += valor - 0.1
 
 class ContaPoupanca(Conta):
+    tipo = "Conta Poupança"
+    taxa_multiplicador = 3
     
     def atualiza(self, taxa):
-        self._saldo += self._saldo*taxa*3
-        return self._saldo
+        return super().atualiza(taxa*self.taxa_multiplicador)
+    
+class ContaInvestimento(Conta):
+    tipo = "Conta Investimento"
+    taxa_multiplicador = 5
+    
+    def atualiza(self, taxa):
+        return super().atualiza(taxa*self.taxa_multiplicador)
         
 class AtualizadorDeContas:
     
@@ -142,6 +172,10 @@ class AtualizadorDeContas:
         self._saldo_total = saldo_total
         
     def roda(self, conta):
+        if not isinstance(conta, Conta):
+            print("Erro: O objeto precisa ser uma instância de Conta")
+            return
+            
         print("Saldo da Conta: {}".format(conta._saldo))
         self._saldo_total += conta.atualiza(self._selic)
         print("Saldo Final: {}".format(self._saldo_total))
