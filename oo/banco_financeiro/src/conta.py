@@ -141,7 +141,12 @@ class Conta(abc.ABC):
                 )
             )
 
-class ContaCorrente(Conta):
+class TributavelMixIn:
+
+    def get_valor_imposto(self):
+        pass
+
+class ContaCorrente(Conta, TributavelMixIn):
     tipo = "Conta Corrente"
     taxa_multiplicador = 2
 
@@ -150,6 +155,9 @@ class ContaCorrente(Conta):
         
     def deposita(self, valor):
         self._saldo += valor - 0.1
+
+    def get_valor_imposto(self):
+        return self._saldo*0.01
 
 class ContaPoupanca(Conta):
     tipo = "Conta Poupança"
@@ -179,3 +187,14 @@ class AtualizadorDeContas:
         print("Saldo da Conta: {}".format(conta._saldo))
         self._saldo_total += conta.atualiza(self._selic)
         print("Saldo Final: {}".format(self._saldo_total))
+
+
+class SeguroDeVida(TributavelMixIn):
+    
+    def __init__(self, valor, titular, numero_apolice):
+        self._valor = valor
+        self._titular = titular
+        self._numero_apolice = numero_apolice
+
+    def get_valor_imposto(self):
+        return 50 + self._valor*0.05

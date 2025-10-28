@@ -10,7 +10,7 @@ class SistemaInterno:
             print('{} não é autenticável'.format(obj.__class__.__name__))
             return False
 
-class Autenticavel:
+class AutenticavelMixIn:
 
     def autentica(self, senha):
         if self._senha == senha:
@@ -31,7 +31,7 @@ class Funcionario(abc.ABC):
     def get_bonificacao(self):
         return self._salario * 0.1
 
-class Gerente(Funcionario, Autenticavel):
+class Gerente(Funcionario, AutenticavelMixIn):
 
     def __init__(self, nome, cpf, salario, senha, qtd_funcionarios):
         super().__init__(nome, cpf, salario)
@@ -41,7 +41,7 @@ class Gerente(Funcionario, Autenticavel):
     def get_bonificacao(self):
         return super().get_bonificacao() + 1000
 
-class Diretor(Funcionario, Autenticavel):
+class Diretor(Funcionario, AutenticavelMixIn):
 
     def __init__(self, nome, cpf, salario, senha, qtd_funcionarios):
         super().__init__(nome, cpf, salario)
@@ -51,7 +51,7 @@ class Diretor(Funcionario, Autenticavel):
     def get_bonificacao(self):
         return super().get_bonificacao() + 1000
 
-class Cliente(Autenticavel):
+class Cliente(AutenticavelMixIn):
 
     def __init__(self, nome, cpf, senha):
         self._nome = nome

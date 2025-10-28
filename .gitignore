@@ -3,6 +3,8 @@
 __pycache__
 contas.txt
 
+# Virtual environments
 **/venv
 
+# Notes
 notas

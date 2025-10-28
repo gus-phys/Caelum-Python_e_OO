@@ -7,6 +7,9 @@ if __name__ == '__main__':
     gerente = Gerente('José', '222222222-22', 5000.0, '1235', 5)
     cliente = Cliente('Maria', '333333333-33', '1236')
 
+
+    print("\n" + "="*40)
+    print("--- Testando 'SistemaInterno()' ---")
     sistema = SistemaInterno()
     sistema.login(diretor)
     sistema.login(gerente)
