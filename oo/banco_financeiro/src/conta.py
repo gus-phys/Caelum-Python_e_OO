@@ -1,5 +1,6 @@
 import abc
 import datetime
+from src.tributavel import Tributavel
 
 class Banco:
     def __init__(self, nome):
@@ -146,7 +147,7 @@ class TributavelMixIn:
     def get_valor_imposto(self):
         pass
 
-class ContaCorrente(Conta, TributavelMixIn):
+class ContaCorrente(Conta):
     tipo = "Conta Corrente"
     taxa_multiplicador = 2
 
@@ -172,6 +173,9 @@ class ContaInvestimento(Conta):
     
     def atualiza(self, taxa):
         return super().atualiza(taxa*self.taxa_multiplicador)
+
+    def get_valor_imposto(self):
+        return self._saldo*0.03
         
 class AtualizadorDeContas:
     
@@ -189,7 +193,8 @@ class AtualizadorDeContas:
         print("Saldo Final: {}".format(self._saldo_total))
 
 
-class SeguroDeVida(TributavelMixIn):
+class SeguroDeVida:
+    tipo = "Seguro de Vida"
     
     def __init__(self, valor, titular, numero_apolice):
         self._valor = valor
