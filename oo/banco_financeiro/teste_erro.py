@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+
+from src.conta import ContaCorrente
+
+def metodo1():
+    print('início do metodo1')
+    metodo2()
+    print('fim do metodo1')
+
+def metodo2():
+    print('início do metodo2')
+    cc = ContaCorrente(123, 'Cliente Teste', limite=500)
+    try:
+        for i in range (1,15):
+            cc.deposita(i + 1000)
+            print(cc.saldo)
+            if (i == 5):
+                cc = None
+    except:
+        print('erro')
+    print('fim do metodo2')
+
+if __name__ == "__main__":
+    print('início do programa')
+    metodo1()
+    print('fim do programa')
