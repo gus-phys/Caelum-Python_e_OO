@@ -1,0 +1,10 @@
+12345,João Silva,2500.50,5000.00
+23456,Maria Santos,1200.75,3000.00
+34567,Pedro Oliveira,850.00,2500.00
+45678,Ana Costa,4200.30,8000.00
+56789,Carlos Ferreira,320.80,1500.00
+67890,Lucia Rodrigues,6750.25,10000.00
+78901,Roberto Almeida,1580.90,4000.00
+89012,Fernanda Lima,980.45,2000.00
+90123,Marcos Pereira,3400.60,6000.00
+01234,Juliana Souza,750.15,2200.00
